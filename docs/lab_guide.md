@@ -22,7 +22,7 @@ File gợi ý:
 - `src/multi_agent_research_lab/cli.py`
 - `src/multi_agent_research_lab/services/llm_client.py`
 
-TODO(student): thay baseline placeholder bằng một call LLM thật.
+✅ Đã hoàn thành: Sử dụng `LLMClient` trong `src/multi_agent_research_lab/services/llm_client.py` với retry và tracking cost.
 
 ## Milestone 2: Supervisor
 
@@ -31,7 +31,7 @@ File gợi ý:
 - `src/multi_agent_research_lab/agents/supervisor.py`
 - `src/multi_agent_research_lab/graph/workflow.py`
 
-TODO(student): implement routing policy.
+✅ Đã hoàn thành: Supervisor routing logic đã được implement.
 
 Gợi ý câu hỏi thiết kế:
 
@@ -49,7 +49,7 @@ File gợi ý:
 - `agents/analyst.py`
 - `agents/writer.py`
 
-TODO(student): implement từng worker.
+✅ Đã hoàn thành: `Researcher`, `Analyst`, và `Writer` agents đã được viết chi tiết.
 
 ## Milestone 4: Trace và benchmark
 
@@ -73,5 +73,10 @@ Benchmark tối thiểu:
 
 Mỗi nhóm trả lời 2 câu:
 
-1. Case nào nên dùng multi-agent? Vì sao?
-2. Case nào không nên dùng multi-agent? Vì sao?
+1. **Case nào nên dùng multi-agent? Vì sao?**
+   - **Nên dùng cho**: Các quy trình gồm nhiều bước phức tạp (như research, code review kết hợp testing, viết sách) cần chuyên môn hoá từng vai trò, khi single prompt quá dài và dễ gây hallucination, hoặc khi cần một "người" (agent) check lại công việc của người khác (Critic/Analyst) để tăng độ tin cậy.
+   - **Vì sao**: Chia nhỏ vấn đề giúp prompt ngắn hơn, tập trung hơn. Mỗi agent có context riêng biệt, dễ dàng trace lỗi ở khâu nào và prompt engineering riêng cho từng khâu.
+
+2. **Case nào không nên dùng multi-agent? Vì sao?**
+   - **Không nên dùng cho**: Các tác vụ đơn giản, hội thoại ngắn, Q&A cơ bản, hoặc các bài toán cần độ trễ thấp (low latency) như chatbot realtime.
+   - **Vì sao**: Multi-agent tốn nhiều token (do phải đưa state qua lại giữa các LLM calls), latency rất cao (tuần tự qua nhiều bước), và hệ thống phức tạp hơn mức cần thiết, gây lãng phí chi phí API.
